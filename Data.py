@@ -30,6 +30,7 @@ class DataManipulation:
         
         Layer_Data = Layer_Data[Layer_Data['ShSubstrate']=='ON']
         
+    
                 
         Deposition_Details = {'OLED_1':Layer_Data.iloc[:]['OLED1'], 
                           'OLED_2':Layer_Data.iloc[:]['OLED2'],
