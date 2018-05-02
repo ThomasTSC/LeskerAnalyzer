@@ -56,3 +56,8 @@ def Get_Batch_Info(Batch):
                     Batch_Info= dict({'Calendar_Week' : CW, 'Batch_Number' : Batch, 'Project_Name' : Project, 'Aim' : Aim, 'Substrate_Number': Substrate_Number, 'Substrate_List' : Substrate_list, 'Layer_Number' : Layer_count, 'Architecture' : Architecture})
                 
                     return Batch_Info
+                
+                
+if __name__ == "__main__":
+    
+    pass

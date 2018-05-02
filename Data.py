@@ -81,7 +81,7 @@ class BatchAnalysis:
             
             Layer_Name['Layer_%d' %(i+1)] = (str(File_Handling.FileHandling(self.Batch_Number).getLogFileList()[i].split()[1])+' '+str(File_Handling.FileHandling(self.Batch_Number).getLogFileList()[i].split()[2]))
         
-        print (Layer_Name)
+        #print (Layer_Name)
         
         return Layer_Name
         
@@ -122,7 +122,7 @@ class BatchAnalysis:
         
     def layerPlannedThickness(self):
         
-        Layer_Ratio = DataManipulation(self.Batch_Number,self.Layer_Order).layerRatio()
+        Layer_Ratio = BatchAnalysis(self.Batch_Number).layerRatio()
         
         Batch_Info = Get_Batch_Info.Get_Batch_Info(self.Batch_Number)
         
@@ -142,6 +142,8 @@ class BatchAnalysis:
        
         del Layer_Ideal_Thickness[0]
   
+        print (Layer_Ideal_Thickness)
+        
         
         Ideal_Thickness = {}
         
@@ -197,6 +199,8 @@ class LayerAnalysis:
         if self.Layer_Order == self.Layer_Number-1:
             Cor_Sensor = [6]
             
+            
+       
         #layerThickness = 'Layer_%d' %(Layer_Order+1)
         # reallayerThickness = 'Thickness_%d' %Cor_Sensor[0]
         
@@ -223,7 +227,20 @@ class LayerAnalysis:
         return Deposited_Thickness
 
 
-BatchAnalysis(675).layerName()
+    def correspondingSource(self):
+        
+        return
+    
+    def timeDuration(self):
+        
+        return 
+
+
+
+
+if __name__ == "__main__":
+    #BatchAnalysis(675).layerRatio()
+    BatchAnalysis(681).layerPlannedThickness()
 
 
 
