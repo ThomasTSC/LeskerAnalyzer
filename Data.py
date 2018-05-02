@@ -95,6 +95,7 @@ class BatchAnalysis:
             Source_Number_per_Layer['Layer_%d' %(i+1)]=(len(File_Handling.FileHandling(self.Batch_Number).getLogFileList()[i].split(' ')[2].split(',')))
         
        
+       
         Layer_Ratio = {}
         
         
