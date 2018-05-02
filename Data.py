@@ -68,9 +68,9 @@ class DataManipulation:
    
 class BatchAnalysis: 
     
-    def __init__(self, Batch_Number, Layer_Order):
+    def __init__(self, Batch_Number):
         self.Batch_Number = Batch_Number
-        self.Layer_Order = Layer_Order
+        self.Layer_Number = File_Handling.FileHandling(self.Batch_Number).countLayerNumber()
     
     def layerName(self):
         
@@ -81,7 +81,7 @@ class BatchAnalysis:
             
             Layer_Name['Layer_%d' %(i+1)] = (str(File_Handling.FileHandling(self.Batch_Number).getLogFileList()[i].split()[1])+' '+str(File_Handling.FileHandling(self.Batch_Number).getLogFileList()[i].split()[2]))
         
-        #print (Layer_Name)
+        print (Layer_Name)
         
         return Layer_Name
         
@@ -161,7 +161,7 @@ class BatchAnalysis:
             Layer_Ideal_Thickness['Layer_%d_Ratio' %(i+1)] = Thickness[i]
         
    
-        #print (Layer_Ideal_Thickness)
+        print (Layer_Ideal_Thickness)
         
         return Layer_Ideal_Thickness
         
@@ -218,9 +218,19 @@ class LayerAnalysis:
         if len(Cor_Sensor) == 4:
             Deposited_Thickness['Layer_%d' %(self.Layer_Order+1)] = [pandas.Series(Deposition_Details['Thickness_%d' %Cor_Sensor[0]]).values[-1]*kA_to_nm, pandas.Series(Deposition_Details['Thickness_%d' %Cor_Sensor[1]]).values[-1]*kA_to_nm, pandas.Series(Deposition_Details['Thickness_%d' %Cor_Sensor[2]]).values[-1]*kA_to_nm, pandas.Series(Deposition_Details['Thickness_%d' %Cor_Sensor[3]]).values[-1]*kA_to_nm]
 
-        #print(Deposited_Thickness)
+        print(Deposited_Thickness)
     
-    
-    
-    
-if __name__ == "__main__":
+        return Deposited_Thickness
+
+
+BatchAnalysis(675).layerName()
+
+
+
+
+
+
+
+
+
+

@@ -90,11 +90,6 @@ class FileHandling:
 
 
 
-if __name__ == "__main__":
-    FileHandling(664).getLogFileList()
-    FileHandling(664).countLayerNumber()
-    FileHandling(664).getFolderPath()
-    FileHandling(664).loadLogFileLayer(0)
     
     
     
