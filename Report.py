@@ -8,7 +8,7 @@ import os
 import operator
 
 
-class MyClass(object):
+class Report:
     '''
     classdocs
     '''
