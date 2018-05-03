@@ -18,53 +18,57 @@ class DataManipulation:
     classdocs
     '''
 
-    def __init__(self, Batch_Number, Layer_Order):
+    def __init__(self, Batch_Number):
         self.Batch_Number = Batch_Number
-        self.Layer_Order = Layer_Order
-        #self.Layer_Number = File_Handling.FileHandling(self.Batch_Number).countLayerNumber()
+        #self.Layer_Order = Layer_Order
+        self.Layer_Number = File_Handling.FileHandling(self.Batch_Number).countLayerNumber()
         
         
     def classifiedData(self):
         
-        Layer_Data = File_Handling.FileHandling(self.Batch_Number).loadLogFileLayer(self.Layer_Order)
+        Layer_Data = {}
+        
+        for Layer_Order in range (0, self.Layer_Number):
+        
+            Layer_Raw_Data = File_Handling.FileHandling(self.Batch_Number).loadLogFileLayer()['Layer_%d' %(Layer_Order+1)]
         
         
-        Layer_Data = Layer_Data[Layer_Data['ShSubstrate']=='ON']
+            Layer_Raw_Data = Layer_Raw_Data[Layer_Raw_Data['ShSubstrate']=='ON']
         
     
-                
-        Deposition_Details = {'OLED_1':Layer_Data.iloc[:]['OLED1'], 
-                          'OLED_2':Layer_Data.iloc[:]['OLED2'],
-                          'OLED_3':Layer_Data.iloc[:]['OLED3'], 
-                          'OLED_4':Layer_Data.iloc[:]['OLED4'],
-                          'OLED_5':Layer_Data.iloc[:]['OLED5'], 
-                          'OLED_6':Layer_Data.iloc[:]['OLED6'],
-                          'OLED_7':Layer_Data.iloc[:]['OLED7'], 
-                          'OLED_8':Layer_Data.iloc[:]['OLED8'],
-                          'OLED_9':Layer_Data.iloc[:]['OLED9'], 
-                          'OLED_10':Layer_Data.iloc[:]['OLED10'],
-                          'Rate_1':Layer_Data.iloc[:]['Rate1'],
-                          'Rate_2':Layer_Data.iloc[:]['Rate2'],
-                          'Rate_3':Layer_Data.iloc[:]['Rate3'],
-                          'Rate_4':Layer_Data.iloc[:]['Rate4'],
-                          'Rate_5':Layer_Data.iloc[:]['Rate5'],
-                          'Rate_6':Layer_Data.iloc[:]['Rate6'],
-                          'Thickness_1':Layer_Data.iloc[:]['Thickness1'],
-                          'Thickness_2':Layer_Data.iloc[:]['Thickness2'],
-                          'Thickness_3':Layer_Data.iloc[:]['Thickness3'],
-                          'Thickness_4':Layer_Data.iloc[:]['Thickness4'],
-                          'Thickness_5':Layer_Data.iloc[:]['Thickness5'],
-                          'Thickness_6':Layer_Data.iloc[:]['Thickness6'],
-                          'RecDate':Layer_Data.iloc[:]['RecDate'],
-                          'RecTime':Layer_Data.iloc[:]['RecTime'],
-                          'ShSubstrate':Layer_Data.iloc[:]['ShSubstrate'],
+    
+            Deposition_Details = {'OLED_1':Layer_Raw_Data.iloc[:]['OLED1'], 
+                          'OLED_2':Layer_Raw_Data.iloc[:]['OLED2'],
+                          'OLED_3':Layer_Raw_Data.iloc[:]['OLED3'], 
+                          'OLED_4':Layer_Raw_Data.iloc[:]['OLED4'],
+                          'OLED_5':Layer_Raw_Data.iloc[:]['OLED5'], 
+                          'OLED_6':Layer_Raw_Data.iloc[:]['OLED6'],
+                          'OLED_7':Layer_Raw_Data.iloc[:]['OLED7'], 
+                          'OLED_8':Layer_Raw_Data.iloc[:]['OLED8'],
+                          'OLED_9':Layer_Raw_Data.iloc[:]['OLED9'], 
+                          'OLED_10':Layer_Raw_Data.iloc[:]['OLED10'],
+                          'Rate_1':Layer_Raw_Data.iloc[:]['Rate1'],
+                          'Rate_2':Layer_Raw_Data.iloc[:]['Rate2'],
+                          'Rate_3':Layer_Raw_Data.iloc[:]['Rate3'],
+                          'Rate_4':Layer_Raw_Data.iloc[:]['Rate4'],
+                          'Rate_5':Layer_Raw_Data.iloc[:]['Rate5'],
+                          'Rate_6':Layer_Raw_Data.iloc[:]['Rate6'],
+                          'Thickness_1':Layer_Raw_Data.iloc[:]['Thickness1'],
+                          'Thickness_2':Layer_Raw_Data.iloc[:]['Thickness2'],
+                          'Thickness_3':Layer_Raw_Data.iloc[:]['Thickness3'],
+                          'Thickness_4':Layer_Raw_Data.iloc[:]['Thickness4'],
+                          'Thickness_5':Layer_Raw_Data.iloc[:]['Thickness5'],
+                          'Thickness_6':Layer_Raw_Data.iloc[:]['Thickness6'],
+                          'RecDate':Layer_Raw_Data.iloc[:]['RecDate'],
+                          'RecTime':Layer_Raw_Data.iloc[:]['RecTime'],
+                          'ShSubstrate':Layer_Raw_Data.iloc[:]['ShSubstrate'],
                           }
         
+            Layer_Data['Layer_%d' %(Layer_Order+1)]= Deposition_Details 
         
+        print (Layer_Data['Layer_1'])
         
-        #print (Deposition_Details)
-        
-        return Deposition_Details 
+        return Layer_Data
     
    
 class BatchAnalysis: 
@@ -187,7 +191,6 @@ class LayerAnalysis:
         
         Source_Number['Layer_%d_Source' %(Layer_Order+1)] = File_Handling.FileHandling(self.Batch_Number).getLogFileList()[Layer_Order].split(' ')[2].split(',')
         
-        
         Deposited_Thickness = {}
         
         kA_to_nm = 100
@@ -249,7 +252,6 @@ class LayerAnalysis:
         
         print (Sensor_Info)
         
-        
         return Sensor_Info
         
         
@@ -287,11 +289,9 @@ class LayerAnalysis:
 
 if __name__ == "__main__":
     
-    #BatchAnalysis(675).layerRatio()
-    #BatchAnalysis(681).layerPlannedThickness()
-    #LayerAnalysis(681).correspondingSource(0)
-    
-    pass
+    DataManipulation(599).classifiedData()
+
+    print ('done')
 
 
 

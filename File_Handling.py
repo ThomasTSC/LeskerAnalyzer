@@ -73,26 +73,37 @@ class FileHandling:
         return Layer_Number
 
 
-    def loadLogFileLayer(self, Layer_Order):
+    def loadLogFileLayer(self):
         
+        Layer_Number = FileHandling(self.Batch_Number).countLayerNumber()
         
         Batch_Log_File_Folder_Path = FileHandling(self.Batch_Number).getFolderPath()['LogFileFolderPath']
         
         #Change Destination#
         os.chdir(Batch_Log_File_Folder_Path)
+              
+        Load_Log_File_per_Layer = {}
+              
+        for Layer_Order in range(0, Layer_Number):
            
-        Batch_Log_File_Path = (os.listdir(Batch_Log_File_Folder_Path)[Layer_Order])
+            Batch_Log_File_Path = (os.listdir(Batch_Log_File_Folder_Path)[Layer_Order])
         
-        Load_Log_File_per_Layer = pandas.read_csv(Batch_Log_File_Path , error_bad_lines=False)
+            Load_Log_File_per_Layer['Layer_%d' %(Layer_Order+1)] = pandas.read_csv(Batch_Log_File_Path , error_bad_lines=False)
   
+  
+        #print (Load_Log_File_per_Layer)
+    
     
         return Load_Log_File_per_Layer
 
 
 
 if __name__ == "__main__":
-    pass
+    #FileHandling(681).getLogFileList()
+    #FileHandling(681).getFolderPath()
+    #FileHandling(681).countLayerNumber()
+    #FileHandling(681).loadLogFileLayer()
     
-    
+    print('done')
     
     
