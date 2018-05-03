@@ -18,4 +18,13 @@ class MyClass(object):
         '''
         Constructor
         '''
+    
+    def Plot(self):
         
+        return
+    
+    
+    
+    def Report(self):
+        
+        return    
