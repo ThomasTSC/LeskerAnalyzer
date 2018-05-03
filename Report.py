@@ -19,6 +19,23 @@ class MyClass(object):
         Constructor
         '''
     
+    
+    
+    
+    
+    
+    def Summary(self):
+        
+        
+        
+        
+        
+        
+        
+        return
+    
+    
+    
     def Plot(self):
         
         return

@@ -26,7 +26,7 @@ def Get_Batch_Info(Batch):
 
                     #Specify the batch#
 
-                    for w in range(10000, 25000):
+                    for w in range(10000, 20000):
                         if Plan_Lekser_sheet.cell(row=w, column=2).value == Batch :
                             Batch_Location_Index = w
                     
