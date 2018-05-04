@@ -60,4 +60,4 @@ def Get_Batch_Info(Batch):
                 
 if __name__ == "__main__":
     
-    pass
+    print ('done')
