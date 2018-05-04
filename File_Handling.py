@@ -91,7 +91,7 @@ class FileHandling:
             Load_Log_File_per_Layer['Layer_%d' %(Layer_Order+1)] = pandas.read_csv(Batch_Log_File_Path , error_bad_lines=False)
   
   
-        #print (Load_Log_File_per_Layer)
+        print (Load_Log_File_per_Layer)
     
     
         return Load_Log_File_per_Layer
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     #FileHandling(681).getLogFileList()
     #FileHandling(681).getFolderPath()
     #FileHandling(681).countLayerNumber()
-    #FileHandling(681).loadLogFileLayer()
+    FileHandling(599).loadLogFileLayer()
     
     print('done')
     

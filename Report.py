@@ -10,6 +10,7 @@ import excel2img
 import fnmatch
 import glob
 import File_Handling
+import Data
 
 
 
@@ -47,12 +48,59 @@ class Report:
                 for file_name in glob.glob('*-sheet.xlsx'):
                     excel2img.export_img(file_name, "Batch %s.png" %self.Batch_Number, "", "fabSheet!D14:I31")
     
-    
 
 
     def Plot(self):
         
-        return
+        
+        Layer_Data = File_Handling.FileHandling(self.Batch_Number).loadLogFileLayer()
+        print (Layer_Data)
+        
+        #Sensor_Info=Data.LayerAnalysis(self.Batch_Number).Corresponding_Sensor(Layer_Order)
+            #Time = Layer_Analysis.Layer_Analysis(self.Batch).TimeDuration(Layer_Order)
+     
+            #make it clear#
+            #if Layer_Order == self.Layer_Number-1:
+                #Sensor_Info[1][0]= 6 
+                
+            #dictSensor_Info = {"source":Sensor_Info[0], "sensor": Sensor_Info[1]}
+            
+            
+            #plt.figure()
+            #for sensor in dictSensor_Info["sensor"]:
+                #Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' % sensor])
+             
+             
+             
+                
+            #Time v.s. Rate Plot#
+            #if len(Sensor_Info[1]) >1:
+               # plt.figure()
+                #for k in range (len(Sensor_Info[1])):
+                 #   Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' %Sensor_Info[1][k]])
+            
+            #else:
+
+             #   plt.figure()
+              #  Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' %Sensor_Info[1][0]])
+    #def plot():
+    #        Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' %Sensor_Info[1][0]])
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            #plt.title('Layer_%d' %(Layer_Order+1) )
+            #plt.ylabel('Rate (A/s)')
+            #plt.xlabel('Time (s)')
+            #plt.savefig(Log_File_Info.Log_File_Info(self.Batch).Log_File_Info()['Batch_File_Path']+"\ "+"Layer_%d" %(Layer_Order+1))
+            
+            
+            
     
     
     
@@ -65,6 +113,8 @@ class Report:
     
     
 if __name__ == "__main__":
+    
+    Report(672).Plot()
     print('done')
     
     
