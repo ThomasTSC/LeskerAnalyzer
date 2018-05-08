@@ -53,11 +53,12 @@ class Report:
     def Plot(self):
         
         
-        Layer_Data = File_Handling.FileHandling(self.Batch_Number).loadLogFileLayer()
-        print (Layer_Data)
+        #Layer_Data = File_Handling.FileHandling(self.Batch_Number).loadLogFileLayer()
+        #print (Layer_Data['Layer_1'])
         
-        #Sensor_Info=Data.LayerAnalysis(self.Batch_Number).Corresponding_Sensor(Layer_Order)
-            #Time = Layer_Analysis.Layer_Analysis(self.Batch).TimeDuration(Layer_Order)
+        Sensor_Info=Data.LayerAnalysis(self.Batch_Number).Corresponding_Sensor(Layer_Order)
+        print (Sensor_Info)    
+        #Time = Layer_Analysis.Layer_Analysis(self.Batch).TimeDuration(Layer_Order)
      
             #make it clear#
             #if Layer_Order == self.Layer_Number-1:
