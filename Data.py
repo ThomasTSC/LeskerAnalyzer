@@ -20,7 +20,6 @@ class DataManipulation:
 
     def __init__(self, Batch_Number):
         self.Batch_Number = Batch_Number
-        #self.Layer_Order = Layer_Order
         self.Layer_Number = File_Handling.FileHandling(self.Batch_Number).countLayerNumber()
         
         
@@ -66,7 +65,7 @@ class DataManipulation:
         
             Layer_Data['Layer_%d' %(Layer_Order+1)]= Deposition_Details 
         
-        print (Layer_Data['Layer_1'])
+        #print (Layer_Data['Layer_1']['Rate_5'])
         
         return Layer_Data
     
@@ -82,7 +81,7 @@ class BatchAnalysis:
         Layer_Name = {}
           
     
-        for i in range(0,self.Layer_Number): #need to change
+        for i in range(self.Layer_Number): #need to change
             
             Layer_Name['Layer_%d' %(i+1)] = (str(File_Handling.FileHandling(self.Batch_Number).getLogFileList()[i].split()[1])+' '+str(File_Handling.FileHandling(self.Batch_Number).getLogFileList()[i].split()[2]))
         
@@ -104,7 +103,7 @@ class BatchAnalysis:
         Layer_Ratio = {}
         
         
-        for i in range(0, self.Layer_Number):
+        for i in range(self.Layer_Number):
 
             if Source_Number_per_Layer['Layer_%d' %(i+1)] == 1:
                 Layer_Ratio['Layer_%d_Ratio' %(i+1)] = [1 , 0, 0, 0]
@@ -147,12 +146,10 @@ class BatchAnalysis:
        
         del Layer_Ideal_Thickness[0]
   
-
-        
         
         Ideal_Thickness = {}
         
-        for i in range(0, self.Layer_Number):
+        for i in range(self.Layer_Number):
 
             Ideal_Thickness['Layer_%d' %(i+1)] = ([Layer_Ideal_Thickness[i]*x for x in Layer_Ratio['Layer_%d_Ratio' %(i+1)][:]])
             
@@ -188,12 +185,10 @@ class LayerAnalysis:
         #print (Deposition_Details)
         
         Source_Number = {}
-        
         Deposited_Thickness = {}
-        
         kA_to_nm = 100
         
-        for Layer_Order in range(0,self.Layer_Number):
+        for Layer_Order in range(self.Layer_Number):
     
             Source_Number['Layer_%d_Source' %(Layer_Order+1)] = File_Handling.FileHandling(self.Batch_Number).getLogFileList()[Layer_Order].split(' ')[2].split(',')
         
@@ -204,7 +199,7 @@ class LayerAnalysis:
             if Layer_Order == self.Layer_Number-1:
                 Cor_Sensor = [6]
             
-            print (Cor_Sensor)
+            #print (Cor_Sensor)
        
         #layerThickness = 'Layer_%d' %(Layer_Order+1)
         # reallayerThickness = 'Thickness_%d' %Cor_Sensor[0]
@@ -227,72 +222,96 @@ class LayerAnalysis:
             if len(Cor_Sensor) == 4:
                     Deposited_Thickness['Layer_%d' %(Layer_Order+1)] = [pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['Thickness%d' %Cor_Sensor[0]]).values[-1]*kA_to_nm, pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['Thickness%d' %Cor_Sensor[1]]).values[-1]*kA_to_nm, pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['Thickness%d' %Cor_Sensor[2]]).values[-1]*kA_to_nm, pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['Thickness%d' %Cor_Sensor[3]]).values[-1]*kA_to_nm]
 
-        print(Deposited_Thickness)
+        #print(Deposited_Thickness)
     
         return Deposited_Thickness
 
 
-    def correspondingSource(self, Layer_Order):
+    def correspondingSource(self):
         
         Source_Number = {}
-        
-        Source_Number['Layer_%d_Source' %(Layer_Order+1)] = File_Handling.FileHandling(self.Batch_Number).getLogFileList()[Layer_Order].split(' ')[2].split(',')
-        
+        Cor_Sensor = {}
         
         
-        B = (list(map(float,Source_Number['Layer_%d_Source' %(Layer_Order+1)])))                
-        A = [x / 2 for x in B]             
-        Cor_Sensor = ([ math.ceil(x) for x in A])
+        for Layer_Order in range(self.Layer_Number):
+        
+            Source_Number['Layer_%d_Source' %(Layer_Order+1)] = File_Handling.FileHandling(self.Batch_Number).getLogFileList()[Layer_Order].split(' ')[2].split(',')
+        
+        
+        
+            B = (list(map(float,Source_Number['Layer_%d_Source' %(Layer_Order+1)])))                
+            A = [x / 2 for x in B]             
+            
+            Cor_Sensor['Layer_%d_Source' %(Layer_Order+1)] = ([ math.ceil(x) for x in A])
                  
-        if Layer_Order == self.Layer_Number-1:
-            Cor_Sensor= [6]
+            if Layer_Order == self.Layer_Number-1:
+                Cor_Sensor['Layer_%d_Source' %(Layer_Order+1)]= [6]
             
         
         Sensor_Info = {'Sensor_Number':Source_Number, 'Corresponding_Sensor':Cor_Sensor}
         
         
-        print (Sensor_Info)
+        #print (Sensor_Info)
         
         return Sensor_Info
         
         
     
     
-    def timeDuration(self, Layer_Order):
+    def timeDuration(self):
         
-        Deposition_Details = DataManipulation(self.Batch_Number,Layer_Order).classifiedData()
+        Deposition_Details = DataManipulation(self.Batch_Number).classifiedData()
     
-        Init_Date = (pandas.Series(Deposition_Details['RecDate']).values[0]).split('/')
+        Time_Duration = {}
     
-        Init_Time = (pandas.Series(Deposition_Details['RecTime']).values[0]).split(':')
-    
-        Time_Series = []
-    
-        for i in range(0, len(pandas.Series(Deposition_Details['RecDate']))):
-            Instant_Date = (pandas.Series(Deposition_Details['RecDate']).values[i]).split('/')
-            Instant_Time = (pandas.Series(Deposition_Details['RecTime']).values[i]).split(':')
-        
-            b = datetime.datetime(int(Instant_Date[2]),int(Instant_Date[1].strip("0")),int(Instant_Date[0]),int(Instant_Time[0]),int(Instant_Time[1]),int(Instant_Time[2]))
-
-            a = datetime.datetime(int(Init_Date[2]),int(Init_Date[1].strip("0")),int(Init_Date[0]),int(Init_Time[0]),int(Init_Time[1]),int(Init_Time[2]))
+        for Layer_Order in range(self.Layer_Number):
             
-            diffSeconds = (b-a).total_seconds() 
+            Init_Date = (pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['RecDate']).values[0]).split('/')
     
-            Time_Series.append(diffSeconds)
+            Init_Time = (pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['RecTime']).values[0]).split(':')
+    
+            Time_Series = []
         
-        Time_Series = numpy.array(list(map(int, Time_Series)))
+        
+        
+            for i in range(len(pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['RecDate']))):
+                Instant_Date = (pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['RecDate']).values[i]).split('/')
+                Instant_Time = (pandas.Series(Deposition_Details['Layer_%d' %(Layer_Order+1)]['RecTime']).values[i]).split(':')
+        
+                b = datetime.datetime(int(Instant_Date[2]),int(Instant_Date[1].strip("0")),int(Instant_Date[0]),int(Instant_Time[0]),int(Instant_Time[1]),int(Instant_Time[2]))
+
+                a = datetime.datetime(int(Init_Date[2]),int(Init_Date[1].strip("0")),int(Init_Date[0]),int(Init_Time[0]),int(Init_Time[1]),int(Init_Time[2]))
+            
+                diffSeconds = (b-a).total_seconds() 
+    
+                Time_Series.append(diffSeconds)
+        
+            
+            Time_Series = numpy.array(list(map(int, Time_Series)))
+            
+            Time_Duration['Layer_%d' %(Layer_Order+1)] = Time_Series
+        
+        
       
+        #print (Time_Duration)
         
-        return Time_Series
+        return Time_Duration
 
-
+    def deviation(self):
+        
+        
+        Deviation = []
+        
+        return Deviation
 
 
 if __name__ == "__main__":
     
-    #DataManipulation(599).classifiedData()
-
-    LayerAnalysis(599).depositedThickness()
+    DataManipulation(599).classifiedData()
+    #BatchAnalysis(599).layerPlannedThickness()
+    #LayerAnalysis(599).depositedThickness()
+    #LayerAnalysis(599).correspondingSource()
+    #LayerAnalysis(599).timeDuration()
     print ('done')
 
 

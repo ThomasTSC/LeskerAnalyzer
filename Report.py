@@ -11,6 +11,9 @@ import fnmatch
 import glob
 import File_Handling
 import Data
+import seaborn
+import numpy
+import matplotlib.pyplot as plt
 
 
 
@@ -29,15 +32,6 @@ class Report:
         self.Lesker_Folder_Path = 'P:\Forschungs-Projekte\OLED-measurements Bruchsal\B 2018 Lesker'
     
     
-    
-    def Summary(self):
-        
-        
-        
-        
-        return
-    
-    
     def stackImage(self):
         
         os.chdir(self.Lesker_Folder_Path)
@@ -53,51 +47,29 @@ class Report:
     def Plot(self):
         
         
-        #Layer_Data = File_Handling.FileHandling(self.Batch_Number).loadLogFileLayer()
-        #print (Layer_Data['Layer_1'])
+        Layer_Data = Data.DataManipulation(self.Batch_Number).classifiedData()
+        #print (Layer_Data['Layer_1']['Rate_5'])
         
-        Sensor_Info=Data.LayerAnalysis(self.Batch_Number).Corresponding_Sensor(Layer_Order)
-        print (Sensor_Info)    
-        #Time = Layer_Analysis.Layer_Analysis(self.Batch).TimeDuration(Layer_Order)
+        Sensor_Info=Data.LayerAnalysis(self.Batch_Number).correspondingSource()
+        #print (Sensor_Info['Corresponding_Sensor']['Layer_1_Source'])    
+        Time = Data.LayerAnalysis(self.Batch_Number).timeDuration()
      
-            #make it clear#
-            #if Layer_Order == self.Layer_Number-1:
-                #Sensor_Info[1][0]= 6 
-                
-            #dictSensor_Info = {"source":Sensor_Info[0], "sensor": Sensor_Info[1]}
+        
+        for Layer_Order in range(self.Layer_Number):   
             
+            plt.figure()
             
-            #plt.figure()
-            #for sensor in dictSensor_Info["sensor"]:
-                #Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' % sensor])
-             
-             
-             
-                
-            #Time v.s. Rate Plot#
-            #if len(Sensor_Info[1]) >1:
-               # plt.figure()
-                #for k in range (len(Sensor_Info[1])):
-                 #   Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' %Sensor_Info[1][k]])
+            for Sensor in (Sensor_Info['Corresponding_Sensor']['Layer_%d_Source' %(Layer_Order+1)] ):
             
-            #else:
-
-             #   plt.figure()
-              #  Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' %Sensor_Info[1][0]])
-    #def plot():
-    #        Reg_Plot = seaborn.regplot(x=numpy.array(Time), y=Layer_Data['Rate_%d' %Sensor_Info[1][0]])
+                Reg_Plot = seaborn.regplot(x=(Time['Layer_%d' %(Layer_Order+1)]), y=Layer_Data['Layer_%d' %(Layer_Order+1)]['Rate_%d' %(Sensor)])
             
             
             
             
-            
-            
-            
-            
-            
-            #plt.title('Layer_%d' %(Layer_Order+1) )
-            #plt.ylabel('Rate (A/s)')
-            #plt.xlabel('Time (s)')
+            plt.title('Layer_%d' %(Layer_Order+1) )
+            plt.ylabel('Rate (A/s)')
+            plt.xlabel('Time (s)')
+            plt.show()
             #plt.savefig(Log_File_Info.Log_File_Info(self.Batch).Log_File_Info()['Batch_File_Path']+"\ "+"Layer_%d" %(Layer_Order+1))
             
             
