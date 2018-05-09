@@ -100,9 +100,9 @@ class FileHandling:
 
 if __name__ == "__main__":
     #FileHandling(681).getLogFileList()
-    #FileHandling(681).getFolderPath()
+    #FileHandling(685).getFolderPath()
     #FileHandling(681).countLayerNumber()
-    FileHandling(599).loadLogFileLayer()
+    #FileHandling(599).loadLogFileLayer()
     
     print('done')
     

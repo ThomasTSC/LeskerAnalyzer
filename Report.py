@@ -69,8 +69,8 @@ class Report:
             plt.title('Layer_%d' %(Layer_Order+1) )
             plt.ylabel('Rate (A/s)')
             plt.xlabel('Time (s)')
-            plt.show()
-            #plt.savefig(Log_File_Info.Log_File_Info(self.Batch).Log_File_Info()['Batch_File_Path']+"\ "+"Layer_%d" %(Layer_Order+1))
+            #plt.show()
+            plt.savefig(File_Handling.FileHandling(self.Batch_Number).getFolderPath()['BatchFolderPath']+"\ "+"Layer_%d" %(Layer_Order+1))
             
             
             
@@ -87,7 +87,7 @@ class Report:
     
 if __name__ == "__main__":
     
-    Report(672).Plot()
+    Report(691).Plot()
     print('done')
     
     
