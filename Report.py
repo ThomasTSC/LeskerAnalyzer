@@ -73,8 +73,6 @@ class Report:
             plt.savefig(File_Handling.FileHandling(self.Batch_Number).getFolderPath()['BatchFolderPath']+"\ "+"Layer_%d" %(Layer_Order+1))
             
             
-            
-    
     
     
     def Report(self):

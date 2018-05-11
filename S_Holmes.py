@@ -6,7 +6,7 @@ Created on 02.05.2018
 
 from tkinter import messagebox
 import tkinter as tkinter 
-
+import Report
 
 
 
@@ -46,7 +46,8 @@ class Sherlock(tkinter.Frame):
         
         def Observation():
             
-            
+            Report.Report(self.var_Batch_Number.get()).Plot()
+            Report.Report(self.var_Batch_Number.get()).Report()
             #Jumping window#
             messagebox.showinfo(title = "From Sherlock", message = "You see, but you do not observe.")
             
